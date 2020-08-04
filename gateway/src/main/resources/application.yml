@@ -1,0 +1,87 @@
+#spring:
+#  http:
+#    converters:
+#      preferred-json-mapper: fastjson
+#  devtools:
+#    restart:
+#      # 是否开启开发者工具（true/false）
+#      enabled: false
+#      additional-paths: src/main/java
+#  aop:
+#    # false为启用jdk默认动态代理,true为cglib动态代理
+#    proxy-target-class: true
+#  jackson:
+#    default-property-inclusion: non_null
+#
+## 系统终端访问标识，路径采用 Ant 风格
+#terminal:
+#  configs:
+#    - name: 采购商端
+#      system-id: 1
+#      access-flag: /purchaser-api/**
+#      cookie-token-key: 'Purchaser-Token'
+#    - name: 供应商端
+#      system-id: 2
+#      access-flag: /supplier-api/**
+#      cookie-token-key: 'Supplier-Token'
+#    - name: 审计端
+#      system-id: 3
+#      access-flag: /audit-api/**
+#      cookie-token-key: 'Audit-Token'
+#    - name: CRM端
+#      system-id: 4
+#      access-flag: /crm-api/**
+#      cookie-token-key: 'Crm-Token'
+#
+#
+## 安全路径白名单，不需要登录的，采用 Ant 风格
+#secure:
+#  ignored:
+#    urls:
+#      - /actuator/health/**
+#      - /doc.html
+#      - /**/swagger-ui.html
+#      - /**/swagger-resources/**
+#      - /**/swagger/**
+#      - /**/v2/api-docs
+#      - /**/webjars/springfox-swagger-ui/**
+#      - /**/*.js
+#      - /**/*.css
+#      - /**/*.png
+#      - /**/*.ico
+#      - /**/actuator/**
+#      - /*/*/userAuth/login
+#      - /*/*/userAuth/logout
+#      - /crm-api/auth-api/*/userAuth/login
+#      - /crm-api/auth-api/*/cnArea/**
+#      - /*/*/userAuth/register
+#      - /*/*/userAuth/checkUnifiedCode
+#      - /*/*/userAuth/checkCorporateName
+#      - /supplier-api/*/auditInfo/list
+#      - /*/*/smsLog/sms
+#      - /*/*/cnArea/**
+#      - /*/*/certificate/detail
+#      - /*/*/certificate/detail/{num}
+#
+## 使用 OkHttp
+#feign:
+#  httpclient:
+#    enabled: false
+#  okhttp:
+#    enabled: true
+#
+#gateway:
+#  log:
+#    enable: true
+#
+## swagger 配置
+#swagger:
+#  resources:
+#      location: /crm-api/v2/api-docs
+#    - name: 权限服务
+#      location: /auth-api/v2/api-docs
+#    - name: 订单服务
+#      location: /order-api/v2/api-docs
+#    - name: 物流服务
+#      location: /logistics-api/v2/api-docs
+#

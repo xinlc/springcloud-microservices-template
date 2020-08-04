@@ -1,0 +1,59 @@
+spring:
+  profiles:
+    active: @profile.env@
+  application:
+    name: example-auth-service
+  http:
+    converters:
+      preferred-json-mapper: fastjson
+  devtools:
+    livereload:
+      enabled: false
+    #      port: 35721 # 指定端口，多服务避免冲突。经测试，即使冲突只要有一个服务启动就好用
+    restart:
+      enabled: false # 是否启用热部署
+      additional-paths: src/main/java
+  aop:
+    # auto: true # 相当于 @EnableAspectJAutoProxy，默认开启
+    proxy-target-class: true #false为启用jdk默认动态代理,true为cglib动态代理
+  jackson:
+    default-property-inclusion: non_null
+
+# 使用 OkHttp
+feign:
+  httpclient:
+    enabled: false
+  okhttp:
+    enabled: true
+
+# 系统终端访问标识，路径采用 Ant 风格
+terminal:
+  configs:
+    - name: xxx端
+      system-id: 1
+      tokenHead: 'Bearer ' # JWT 负载中拿到开头
+      secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT 加解密使用的密钥
+      payloadSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT Payload 加密使用的秘钥
+      expiration: 1800 # JWT 的超期限时间30分钟
+      refreshInterval: 900 # JWT token 刷新间隔15分钟
+    - name: xxx端
+      system-id: 2
+      tokenHead: 'Bearer ' # JWT 负载中拿到开头
+      secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT 加解密使用的密钥
+      payloadSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT Payload 加密使用的秘钥
+      expiration: 604800 # JWT 的超期限时间(60*60*24*7) 秒
+      refreshInterval: 36000 # JWT token 刷新间隔(60*60) 秒
+    - name: xxx端
+      system-id: 3
+      tokenHead: 'Bearer ' # JWT 负载中拿到开头
+      secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT 加解密使用的密钥
+      payloadSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT Payload 加密使用的秘钥
+      expiration: 604800 # JWT 的超期限时间(60*60*24*7) 秒
+      refreshInterval: 36000 # JWT token 刷新间隔(60*60) 秒
+    - name: xxx端
+      system-id: 4
+      tokenHead: 'Bearer ' # JWT 负载中拿到开头
+      secret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT 加解密使用的密钥
+      payloadSecret: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx # JWT Payload 加密使用的秘钥
+      expiration: 604800 # JWT 的超期限时间(60*60*24*7) 秒
+      refreshInterval: 36000 # JWT token 刷新间隔(60*60) 秒

@@ -1,0 +1,95 @@
+package ${package.Controller};
+
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.example.common.result.ApiResult;
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import com.example.dao.vo.BaseVo;
+#if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+import lombok.extern.slf4j.Slf4j;
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+#if(${restControllerStyle})
+#else
+import org.springframework.stereotype.Controller;
+#end
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+/**
+ * $!{table.comment} 前端控制器
+ * @author ${author}
+ * @since ${date}
+ */
+@Slf4j
+#if(${swagger2})
+@Api(value="${table.comment}", description="$!{table.comment}控制器")
+#end
+#if(${restControllerStyle})
+@RestController
+#else
+@Controller
+#end
+@RequestMapping("#if(${package.ModuleName})/${package.ModuleName}#end/v1/#if(${controllerMappingHyphenStyle})${controllerMappingHyphen}#else${table.entityPath}#end")
+@Scope("prototype")
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+#if(${superControllerClass})
+public class ${table.controllerName} extends ${superControllerClass} {
+#else
+public class ${table.controllerName} {
+#end
+
+    @Autowired
+    private ${table.serviceName} ${table.entityPath}Service;
+
+    @ApiOperation("${table.comment}分页列表")
+    @GetMapping("/page")
+    public ApiResult<?> get${entity}PageList(@RequestParam(defaultValue = "1") Integer page,
+                                             @RequestParam(defaultValue = "10") Integer limit,
+                                             BaseVo baseVo) {
+        PageHelper.startPage(page, limit);
+        List<${entity}> ${table.entityPath}List = ${table.entityPath}Service.select${entity}Page(baseVo);
+        PageInfo<${entity}> pageInfo = new PageInfo<>(${table.entityPath}List);
+        return ApiResult.SUCCESS().initSuccessInfo(pageInfo.getList(), pageInfo.getTotal());
+    }
+
+    @ApiOperation("${table.comment}添加")
+    @PostMapping("/add")
+    public ApiResult<?> add${entity}(@RequestBody ${entity} ${table.entityPath}) {
+        ${table.entityPath}Service.save${entity}(${table.entityPath});
+        return ApiResult.SUCCESS();
+    }
+
+    @ApiOperation("${table.comment}修改")
+    @PostMapping("/update")
+    public ApiResult<?> update${entity}(@RequestBody ${entity} ${table.entityPath}) {
+        ${table.entityPath}Service.update${entity}ById(${table.entityPath});
+        return ApiResult.SUCCESS();
+    }
+
+    @ApiOperation("${table.comment}删除")
+    @PostMapping("/delete/{id}")
+    public ApiResult<?> delete${entity}ById(@PathVariable Long id) {
+        ${table.entityPath}Service.delete${entity}ById(id);
+        return ApiResult.SUCCESS();
+    }
+
+    @ApiOperation("${table.comment}详情")
+    @GetMapping("/detail/{id}")
+    public ApiResult<?> get${entity}ById(@PathVariable Long id) {
+        ${entity} ${table.entityPath} = ${table.entityPath}Service.select${entity}ById(id);
+        return ApiResult.SUCCESS().initSuccessInfo(${table.entityPath});
+    }
+}
+#end

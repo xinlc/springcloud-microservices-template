@@ -1,0 +1,10 @@
+server:
+  port: 80
+  servlet:
+    context-path: /monitor
+
+logging:
+  level:
+    root: info
+    org.springframework.boot.autoconfigure: error
+

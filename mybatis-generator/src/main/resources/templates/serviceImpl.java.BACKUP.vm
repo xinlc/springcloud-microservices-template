@@ -1,0 +1,58 @@
+package ${package.ServiceImpl};
+
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.example.common.utils.DateUtil;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import com.example.dao.vo.BaseVo;
+import ${package.Service}.${table.serviceName};
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+/**
+ * $!{table.comment} 服务实现类
+ * @author ${author}
+ * @since ${date}
+ */
+@Service
+#if(${kotlin})
+open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
+
+}
+#else
+public class ${table.serviceImplName} extends AbstractService<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+
+    @Autowired
+    public ${table.mapperName} ${table.entityPath}Mapper;
+
+    @Override
+    public List<${entity}> select${entity}Page(BaseVo baseVo) {
+        return this.list(new LambdaQueryWrapper<${entity}>()
+                .apply(null != baseVo.getStartTime(),"date_format(create_time,'%Y-%m-%d') >= {0}", DateUtil.convertStr2Str(baseVo.getStartTime(),"yyyy-MM-dd"))
+                .apply(null != baseVo.getEndTime(),"date_format(create_time,'%Y-%m-%d') <= {0}", DateUtil.convertStr2Str(baseVo.getEndTime(),"yyyy-MM-dd"))
+                .last("ORDER BY create_time DESC"));
+    }
+
+    @Override
+    public boolean save${entity}(${entity} ${table.entityPath}) {
+        return this.saveOrUpdate(${table.entityPath});
+    }
+
+    @Override
+    public boolean update${entity}ById(${entity} ${table.entityPath}) {
+        return this.updateById(${table.entityPath});
+    }
+
+    @Override
+    public void delete${entity}ById(Long id) {
+        ${table.entityPath}Mapper.delete${entity}ById(id);
+    }
+
+    @Override
+    public ${entity} select${entity}ById(Long id) {
+        return this.getById(id);
+    }
+}
+#end

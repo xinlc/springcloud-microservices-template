@@ -1,0 +1,119 @@
+#server:
+#  port: 80
+#spring:
+#  redis:
+#    database: 1
+#    host: ${REDIS_SERVICE_HOST}
+#    port: ${REDIS_SERVICE_PORT}
+#    password: ${REDIS_SERVICE_PASSWORD}
+#    lettuce:
+#      # 关闭超时
+#      shutdown-timeout: 300ms
+#      pool:
+#        # 连接池最大连接数（使用负值表示没有限制）
+#        max-active: 600
+#        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#        max-wait: 1000
+#        # 连接池中的最大空闲连接
+#        max-idle: 300
+#        # 连接池中的最小空闲连接
+#        min-idle: 0
+#    # 连接超时时间（毫秒）
+#    timeout: 1000
+#
+#  cloud:
+#    sentinel:
+#      # transport:
+#      #   port: 8719
+#      #   dashboard: nacos:8858
+#      datasource:
+#        flow.nacos:
+#          server-addr: nacos:8848
+#          data-id: ${spring.application.name}-flow
+#          data-type: json
+#          namespace: example-prod
+#          rule-type: gw-flow
+#        degrade.nacos:
+#          server-addr: nacos:8848
+#          data-id: ${spring.application.name}-degrade
+#          data-type: json
+#          namespace: example-prod
+#          rule-type: degrade
+#      filter:
+#        enabled: false
+#      eager: false
+#      scg.fallback:
+#        mode: response
+#        response-status: 200
+#        response-body: "{\"code\":429,\"msg\":\"系统繁忙,请稍候再试\"}"
+#    gateway:
+#      routes:
+#        - id: auth_path_route
+#          uri: http://example-auth-service/auth-api
+#          order: 100
+#          predicates:
+#            - Path=/auth-api/**
+#          filters:
+#            - SwaggerHeaderFilter
+#
+#        - id: other_auth_path_route
+#          uri: http://example-auth-service/auth-api
+#          order: 200
+#          predicates:
+#            - Path=/supplier-api/auth-api/**, /purchaser-api/auth-api/**, /audit-api/auth-api/**, /crm-api/auth-api/**
+#          filters:
+#            - SwaggerHeaderFilter
+#            - StripPrefix=1
+#
+#logging:
+#  level:
+#    root: info
+#    org.springframework.boot.autoconfigure: error
+#    org.springframework.cloud.gateway: error
+#    com.example.dao.mapper: error
+#
+## 缓存配置
+#jetcache:
+#  # 统计间隔，已分钟为单位，0表示不统计
+#  statIntervalMinutes: 0
+#  # areaName是否作为缓存key前缀，默认true
+#  areaInCacheName: false
+#  # 本地缓存 一级
+#  local:
+#    default:
+#      # 已支持可选：linkedhashmap、caffeine
+#      type: linkedhashmap
+#      # key转换器的全局配置，当前只有：fastjson, @see com.alicp.jetcache.support.FastjsonKeyConvertor
+#      keyConvertor: fastjson
+#      # 每个缓存实例的最大元素的全局配置，仅local类型的缓存需要指定
+#      limit: 100
+#      # 以毫秒为单位指定超时时间的全局配置
+#      expireAfterWriteInMillis: 5000
+#      # 以毫秒为单位，指定多长时间没有访问，就让缓存失效，当前只有本地缓存支持。0表示不使用这个功能
+#      expireAfterAccessInMillis: 1000
+#  # 远程缓存 二级
+#  remote:
+#    default:
+#      type: redis
+#      database: 1
+#      host: ${REDIS_SERVICE_HOST}
+#      port: ${REDIS_SERVICE_PORT}
+#      password: ${REDIS_SERVICE_PASSWORD}
+#      keyConvertor: fastjson
+#      # 序列化器的全局配置。仅remote类型的缓存需要指定，可选java和kryo
+#      valueEncoder: java
+#      valueDecoder: java
+#      # 以毫秒为单位指定超时时间的全局配置, 默认 无穷大
+#      expireAfterWriteInMillis: 60000
+#      poolConfig:
+#        minIdle: 5
+#        maxIdle: 20
+#        maxTotal: 50
+#
+## service endpoint
+#example:
+#  auth-service-endpoint: http://example-auth-service/auth-api
+#
+## 配置 okhttp
+#okhttp:
+#  level: NONE

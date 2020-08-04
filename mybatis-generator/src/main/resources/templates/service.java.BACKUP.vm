@@ -1,0 +1,54 @@
+package ${package.Service};
+
+import ${superServiceClassPackage};
+import ${package.Entity}.${entity};
+import com.example.dao.vo.BaseVo;
+
+import java.util.List;
+
+/**
+ * $!{table.comment} 服务类
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+
+    /**
+     * ${table.comment}分页查询
+     * @param baseVo
+     * @return
+     */
+    List<${entity}> select${entity}Page(BaseVo baseVo);
+
+    /**
+     * ${table.comment}添加
+     * @param ${table.entityPath}
+     * @return
+     */
+    boolean save${entity}(${entity} ${table.entityPath});
+
+    /**
+     * ${table.comment}修改
+     * @param ${table.entityPath}
+     * @return
+     */
+    boolean update${entity}ById(${entity} ${table.entityPath});
+
+    /**
+     * ${table.comment}删除
+     * @param id
+     * @return
+     */
+    void delete${entity}ById(Long id);
+
+    /**
+     * ${table.comment}详情
+     * @param id
+     * @return
+     */
+    ${entity} select${entity}ById(Long id);
+}
+#end

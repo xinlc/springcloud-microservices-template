@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    nacos:
+#      username: nacos
+#      password: nacos
+      # 服务注册发现
+      discovery:
+        server-addr: dev.example.com:8848
+        namespace: example-dev
+      # 配置中心
+      config:
+        enabled: true
+        server-addr: dev.example.com:8848
+        file-extension: yaml
+        namespace: example-dev
+        shared-configs:
+          - dataId: common.yaml
+            refresh: true
+

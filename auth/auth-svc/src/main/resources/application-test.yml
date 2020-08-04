@@ -1,0 +1,131 @@
+server:
+  port: 80
+  servlet:
+    context-path: /auth-api
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://dev.example.com:33062/test?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: example
+    platform: mysql
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化大小，最小，最大
+    druid:
+      initial-size: 1
+      min-idle: 3
+      max-active: 20
+      # 配置获取连接等待超时的时间
+      max-wait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      time-between-eviction-runs-millis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      min-evictable-idle-time-millis: 30000
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      validation-query: SELECT 1
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      pool-prepared-statements: true
+      max-pool-prepared-statement-per-connection-size: 20
+      # 合并多个DruidDataSource的监控数据
+      use-global-data-source-stat: true
+      filter:
+        stat:
+          enabled: true
+          log-slow-sql: true
+          merge-sql: true
+          slow-sql-millis: 500
+        wall:
+          enabled: true
+        slf4j:
+          enabled: true
+          statement-executable-sql-log-enable: true
+
+  redis:
+    database: 10
+    host: dev.example.com
+    port: 63792
+    password: example
+    lettuce:
+      shutdown-timeout: 300ms #关闭超时
+      pool:
+        max-active: 600 #连接池最大连接数（使用负值表示没有限制）
+        max-wait: 1000 #连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-idle: 300 #连接池中的最大空闲连接
+        min-idle: 0 #连接池中的最小空闲连接
+    timeout: 1000 #连接超时时间（毫秒）
+
+mybatis-plus:
+  mapper-locations: classpath:/com/example/dao/mapper/xml/*Mapper.xml, classpath:/com/example/auth/mapper/xml/*Mapper.xml
+  type-aliases-package: com.example.dao.entity, com.example.dao.vo, com.example.auth.dto
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    db-config:
+      db-type: MYSQL
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql
+
+logging:
+  level:
+    root: info
+    org.springframework.boot.autoconfigure: error
+#    com.example.dao.mapper: debug
+    druid.sql.Statement: debug
+
+# 缓存配置
+jetcache:
+  # 统计间隔，已分钟为单位，0表示不统计
+  statIntervalMinutes: 15
+  # areaName是否作为缓存key前缀，默认true
+  areaInCacheName: false
+  # 本地缓存 一级
+  local:
+    default:
+      # 已支持可选：linkedhashmap、caffeine
+      type: linkedhashmap
+      # key转换器的全局配置，当前只有：fastjson, @see com.alicp.jetcache.support.FastjsonKeyConvertor
+      keyConvertor: fastjson
+      # 每个缓存实例的最大元素的全局配置，仅local类型的缓存需要指定
+      limit: 100
+      # 以毫秒为单位指定超时时间的全局配置
+      expireAfterWriteInMillis: 5000
+      # 以毫秒为单位，指定多长时间没有访问，就让缓存失效，当前只有本地缓存支持。0表示不使用这个功能
+      expireAfterAccessInMillis: 1000
+  # 远程缓存 二级
+  remote:
+    default:
+      type: redis
+      database: 10
+      host: dev.example.com
+      port: 63792
+      password: example
+      keyConvertor: fastjson
+      # 序列化器的全局配置。仅remote类型的缓存需要指定，可选java和kryo
+      valueEncoder: java
+      valueDecoder: java
+      # 以毫秒为单位指定超时时间的全局配置, 默认 无穷大
+      expireAfterWriteInMillis: 60000
+      poolConfig:
+        minIdle: 5
+        maxIdle: 20
+        maxTotal: 50
+
+# 开启Swagger的Basic认证功能
+knife4j:
+  basic:
+    enable: true
+    username: example
+    password: example
+
+# 监控配置
+monitor:
+  druid: true
+

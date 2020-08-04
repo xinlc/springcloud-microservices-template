@@ -1,0 +1,59 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    url: jdbc:mysql://dev.example.com:33062/dev?useUnicode=true&characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&allowMultiQueries=true
+    username: root
+    password: example
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    platform: mysql
+    # 下面为连接池的补充设置，应用到上面所有数据源中
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 初始化大小，最小，最大
+    druid:
+      initialSize: 1
+      minIdle: 3
+      maxActive: 20
+      # 配置获取连接等待超时的时间
+      maxWait: 60000
+      # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+      timeBetweenEvictionRunsMillis: 60000
+      # 配置一个连接在池中最小生存的时间，单位是毫秒
+      minEvictableIdleTimeMillis: 30000
+      validationQuery: select 'x'
+      testWhileIdle: true
+      testOnBorrow: false
+      testOnReturn: false
+      # 打开PSCache，并且指定每个连接上PSCache的大小
+      poolPreparedStatements: true
+      maxPoolPreparedStatementPerConnectionSize: 20
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+      filters: stat,wall,slf4j
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+  http:
+    converters:
+      preferred-json-mapper: fastjson
+  devtools:
+    restart:
+      enabled: false #是否开启开发者工具（true/false）
+      additional-paths: src/main/java
+  aop:
+    proxy-target-class: true #false为启用jdk默认动态代理,true为cglib动态代理
+
+mybatis-plus:
+  mapper-locations: classpath:com.example.dao.mapper.*Mapper.xml
+  type-aliases-package: com.example.dao.entity.*,com.example.dao.vo.*
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+  global-config:
+    db-config:
+      db-type: MYSQL
+
+pagehelper:
+  helper-dialect: mysql
+  reasonable: false
+  support-methods-arguments: true
+  params: count=countSql
+logging.level.org.springframework.boot.autoconfigure: ERROR

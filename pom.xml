@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+		 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.example</groupId>
+	<artifactId>example-parent</artifactId>
+	<version>${revision}</version>
+	<name>example-parent</name>
+	<packaging>pom</packaging>
+	<description>Spring Cloud Example</description>
+
+	<modules>
+		<module>common-lib</module>
+		<module>common-dao</module>
+		<module>gateway</module>
+		<module>monitor</module>
+		<module>auth</module>
+	</modules>
+
+	<!-- 版本号管理 -->
+	<properties>
+		<!-- example version -->
+		<revision>1.0.0-SNAPSHOT</revision>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<java.version>1.8</java.version>
+		<maven.compiler.source>1.8</maven.compiler.source>
+		<maven.compiler.target>1.8</maven.compiler.target>
+		<maven.compiler.compilerVersion>1.8</maven.compiler.compilerVersion>
+		<spring.boot.version>2.2.6.RELEASE</spring.boot.version>
+		<maven.plugin.version>2.3.0.RELEASE</maven.plugin.version> <!-- 用到分层特性，后期升级springboot，这个删除 -->
+		<spring.cloud.version>Hoxton.SR3</spring.cloud.version>
+		<spring.cloud.alibaba.version>2.2.0.RELEASE</spring.cloud.alibaba.version>
+		<redis.version>2.2.6.RELEASE</redis.version>
+		<druid.version>1.1.22</druid.version>
+		<mysql.version>6.0.6</mysql.version>
+		<pagehelper.version>1.2.13</pagehelper.version>
+		<mybatis-plus.version>3.3.1</mybatis-plus.version>
+		<p6spy.version>3.9.0</p6spy.version>
+		<aspectj.version>1.9.5</aspectj.version>
+		<lombok.version>1.18.12</lombok.version>
+		<swagger.version>2.9.2</swagger.version>
+		<swagger.models.version>1.5.21</swagger.models.version>
+		<knife4j.version>2.0.2</knife4j.version>
+		<fastjson.version>1.2.68</fastjson.version>
+		<slf4j.version>1.7.30</slf4j.version>
+		<pinyin4j.version>2.5.0</pinyin4j.version>
+		<ant.version>1.9.1</ant.version>
+		<commons-pool2.version>2.6.1</commons-pool2.version>
+		<commons-codec.version>1.3</commons-codec.version>
+		<commons-text.version>1.1</commons-text.version>
+		<aliyun-core.version>4.1.0</aliyun-core.version>
+		<aliyun-dysmsapi.version>1.1.0</aliyun-dysmsapi.version>
+		<aliyun-oss.version>3.5.0</aliyun-oss.version>
+		<commons-io.version>2.5</commons-io.version>
+		<shiro.version>1.4.2</shiro.version>
+		<jetcache.version>2.6.0</jetcache.version>
+		<jedis.version>2.9.3</jedis.version>
+		<jjwt.version>0.9.1</jjwt.version>
+		<hutool.version>5.3.2</hutool.version>
+		<modelmapper.version>2.3.7</modelmapper.version>
+		<feign-okhttp.version>10.7.4</feign-okhttp.version>
+		<boot.admin.version>2.2.2</boot.admin.version>
+		<easyexcel.version>2.1.6</easyexcel.version>
+		<junit.version>5.6.2</junit.version>
+		<junit.platform.version>1.6.2</junit.platform.version>
+		<similarity.version>1.2.1</similarity.version>
+		<emoji.version>4.0.0</emoji.version>
+	</properties>
+
+	<dependencyManagement>
+		<dependencies>
+			<!-- Spring Boot -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-dependencies</artifactId>
+				<version>${spring.boot.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Spring Cloud -->
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring.cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- Spring Cloud alibaba -->
+			<dependency>
+				<groupId>com.alibaba.cloud</groupId>
+				<artifactId>spring-cloud-alibaba-dependencies</artifactId>
+				<version>${spring.cloud.alibaba.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+
+			<!-- 数据源 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>druid-spring-boot-starter</artifactId>
+				<version>${druid.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>mysql</groupId>
+				<artifactId>mysql-connector-java</artifactId>
+				<version>${mysql.version}</version>
+			</dependency>
+			<dependency>
+				<!-- 分页 -->
+				<groupId>com.github.pagehelper</groupId>
+				<artifactId>pagehelper-spring-boot-starter</artifactId>
+				<version>${pagehelper.version}</version>
+			</dependency>
+			<dependency>
+				<!-- mybatis plus -->
+				<groupId>com.baomidou</groupId>
+				<artifactId>mybatis-plus-boot-starter</artifactId>
+				<version>${mybatis-plus.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>p6spy</groupId>
+				<artifactId>p6spy</artifactId>
+				<version>${p6spy.version}</version>
+			</dependency>
+			<!-- 事务&AOP -->
+			<dependency>
+				<groupId>org.aspectj</groupId>
+				<artifactId>aspectjweaver</artifactId>
+				<version>${aspectj.version}</version>
+			</dependency>
+			<!-- lombok -->
+			<dependency>
+				<groupId>org.projectlombok</groupId>
+				<artifactId>lombok</artifactId>
+				<version>${lombok.version}</version>
+				<scope>provided</scope>
+			</dependency>
+			<!-- swagger2 -->
+			<dependency>
+				<groupId>io.springfox</groupId>
+				<artifactId>springfox-swagger2</artifactId>
+				<version>${swagger.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>io.swagger</groupId>
+				<artifactId>swagger-models</artifactId>
+				<version>${swagger.models.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-micro-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.github.xiaoymin</groupId>
+				<artifactId>knife4j-spring-boot-starter</artifactId>
+				<version>${knife4j.version}</version>
+			</dependency>
+			<!--			<dependency>-->
+			<!--				<groupId>io.springfox</groupId>-->
+			<!--				<artifactId>springfox-swagger-ui</artifactId>-->
+			<!--				<version>${swagger.version}</version>-->
+			<!--			</dependency>-->
+			<!-- json序列化、反序列化 -->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>fastjson</artifactId>
+				<version>${fastjson.version}</version>
+			</dependency>
+			<!-- redis -->
+			<dependency>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-starter-data-redis</artifactId>
+				<version>${redis.version}</version>
+			</dependency>
+			<!-- 日志 -->
+			<dependency>
+				<groupId>org.slf4j</groupId>
+				<artifactId>slf4j-api</artifactId>
+				<version>${slf4j.version}</version>
+			</dependency>
+			<!-- 拼音 -->
+			<dependency>
+				<groupId>com.belerweb</groupId>
+				<artifactId>pinyin4j</artifactId>
+				<version>${pinyin4j.version}</version>
+			</dependency>
+			<!-- 自动化工具 -->
+			<dependency>
+				<groupId>org.apache.ant</groupId>
+				<artifactId>ant</artifactId>
+				<version>${ant.version}</version>
+			</dependency>
+			<!-- 对象池 -->
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-pool2</artifactId>
+				<version>${commons-pool2.version}</version>
+			</dependency>
+			<!-- 编码 -->
+			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>${commons-codec.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.apache.commons</groupId>
+				<artifactId>commons-text</artifactId>
+				<version>${commons-text.version}</version>
+			</dependency>
+			<!-- 阿里短信 -->
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-core</artifactId>
+				<version>${aliyun-core.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun</groupId>
+				<artifactId>aliyun-java-sdk-dysmsapi</artifactId>
+				<version>${aliyun-dysmsapi.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>com.aliyun.oss</groupId>
+				<artifactId>aliyun-sdk-oss</artifactId>
+				<version>${aliyun-oss.version}</version>
+			</dependency>
+			<!-- IO扩展 -->
+			<dependency>
+				<groupId>commons-io</groupId>
+				<artifactId>commons-io</artifactId>
+				<version>${commons-io.version}</version>
+			</dependency>
+			<!-- 安全框架 -->
+			<dependency>
+				<groupId>org.apache.shiro</groupId>
+				<artifactId>shiro-spring</artifactId>
+				<version>${shiro.version}</version>
+			</dependency>
+			<!-- 缓存框架 -->
+			<dependency>
+				<groupId>com.alicp.jetcache</groupId>
+				<artifactId>jetcache-starter-redis</artifactId>
+				<version>${jetcache.version}</version>
+			</dependency>
+			<!-- springboot 2.2.0以上的版本 jetcache 使用redis问题 -->
+			<!-- Caused by: java.lang.NoClassDefFoundError: redis/clients/util/Pool -->
+			<!-- https://github.com/alibaba/jetcache/issues/426 -->
+			<!-- 这个是因为jedis做了不兼容的修改导致的，如果你不用spring cache，把jedis的版本改为2.9.3就可以了。如果你要用spring cache，用最新的master自己编译一个包可以支持新版jedis。 -->
+			<!--			<dependency>-->
+			<!--				<groupId>redis.clients</groupId>-->
+			<!--				<artifactId>jedis</artifactId>-->
+			<!--				<version>${jedis.version}</version>-->
+			<!--			</dependency>-->
+
+			<!-- jwt -->
+			<dependency>
+				<groupId>io.jsonwebtoken</groupId>
+				<artifactId>jjwt</artifactId>
+				<version>${jjwt.version}</version>
+			</dependency>
+
+			<!-- 通用工具类库 -->
+			<dependency>
+				<groupId>cn.hutool</groupId>
+				<artifactId>hutool-all</artifactId>
+				<version>${hutool.version}</version>
+				<!-- 排除自带的poi依赖，为了项目使用easyExcel工具 -->
+				<exclusions>
+					<exclusion>
+						<groupId>cn.hutool</groupId>
+						<artifactId>hutool-poi</artifactId>
+					</exclusion>
+				</exclusions>
+			</dependency>
+
+			<!-- dto 映射工具 -->
+			<dependency>
+				<groupId>org.modelmapper</groupId>
+				<artifactId>modelmapper</artifactId>
+				<version>${modelmapper.version}</version>
+			</dependency>
+
+			<!-- 导出Excel-->
+			<dependency>
+				<groupId>com.alibaba</groupId>
+				<artifactId>easyexcel</artifactId>
+				<version>${easyexcel.version}</version>
+			</dependency>
+
+			<!-- OkHttp3 client -->
+			<dependency>
+				<groupId>io.github.openfeign</groupId>
+				<artifactId>feign-okhttp</artifactId>
+				<version>${feign-okhttp.version}</version>
+			</dependency>
+
+			<!-- 应用监控 -->
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-server</artifactId>
+				<version>${boot.admin.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>de.codecentric</groupId>
+				<artifactId>spring-boot-admin-starter-client</artifactId>
+				<version>${boot.admin.version}</version>
+			</dependency>
+
+			<!-- junit test -->
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-engine</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<!--参数化测试-->
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-params</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.jupiter</groupId>
+				<artifactId>junit-jupiter-api</artifactId>
+				<version>${junit.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.platform</groupId>
+				<artifactId>junit-platform-runner</artifactId>
+				<version>${junit.platform.version}</version>
+				<scope>test</scope>
+			</dependency>
+			<dependency>
+				<groupId>org.junit.platform</groupId>
+				<artifactId>junit-platform-console-standalone</artifactId>
+				<version>${junit.platform.version}</version>
+				<scope>test</scope>
+			</dependency>
+
+			<!-- 相似度算法 -->
+			<dependency>
+				<groupId>info.debatty</groupId>
+				<artifactId>java-string-similarity</artifactId>
+				<version>${similarity.version}</version>
+			</dependency>
+
+			<!-- emoji表情库 -->
+			<dependency>
+				<groupId>com.vdurmont</groupId>
+				<artifactId>emoji-java</artifactId>
+				<version>${emoji.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-maven-plugin</artifactId>
+					<version>${maven.plugin.version}</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<activation>
+				<activeByDefault>true</activeByDefault>
+			</activation>
+			<properties>
+				<profile.env>dev</profile.env>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<properties>
+				<profile.env>test</profile.env>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<properties>
+				<profile.env>prod</profile.env>
+			</properties>
+		</profile>
+	</profiles>
+</project>

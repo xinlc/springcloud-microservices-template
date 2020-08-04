@@ -1,0 +1,25 @@
+package ${package.Mapper};
+
+import ${package.Entity}.${entity};
+import ${superMapperClassPackage};
+import org.apache.ibatis.annotations.Mapper;
+import org.springframework.stereotype.Repository;
+
+/**
+ * $!{table.comment} Mapper 接口
+ * @author ${author}
+ * @since ${date}
+ */
+@Mapper
+@Repository
+#if(${kotlin})
+interface ${table.mapperName} : ${superMapperClass}<${entity}>
+#else
+public interface ${table.mapperName} extends ${superMapperClass}<${entity}> {
+    /**
+     * 逻辑删除操作
+     * @param id
+     */
+    void delete${entity}ById(Long id);
+}
+#end

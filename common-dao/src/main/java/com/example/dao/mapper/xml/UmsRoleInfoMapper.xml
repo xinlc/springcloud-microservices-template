@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.dao.mapper.UmsRoleInfoMapper">
+    <update id="deleteUmsRoleInfoById" parameterType="java.lang.Long">
+        UPDATE ums_role_info SET delete_flag = NULL WHERE id = #{value}
+    </update>
+
+    <!--获取登录用户的所有角色-->
+    <select id="getUmsRoleInfoListByUser" parameterType="com.example.common.bo.UserInfoBo"
+            resultType="com.example.dao.entity.UmsRoleInfo">
+        SELECT
+            role.id,
+            role.org_id,
+            role.org_type,
+            role.title,
+            role.description,
+            role.role_type,
+            role.role_status,
+            role.sort_order,
+            role.delete_flag,
+            role.tenant_id,
+            role.create_time,
+            role.create_user_id,
+            role.update_time,
+            role.update_user_id
+        FROM
+            ums_user_role ur
+            JOIN ums_role_info role ON ur.role_id = role.id
+        WHERE
+            ur.user_id = #{userId}
+            AND ur.delete_flag = 0
+            AND role.org_id = #{orgId}
+            AND role.org_type = #{orgType}
+            AND role.role_status = 1
+            AND role.delete_flag = 0
+        ORDER BY
+            role.role_type DESC
+    </select>
+
+    <!--获取指定用户的所有有效角色-->
+    <select id="getUmsRoleInfoListByUserInfo" parameterType="com.example.dao.entity.UserInfo"
+            resultType="com.example.dao.entity.UmsRoleInfo">
+        SELECT
+            role.id,
+            role.org_id,
+            role.org_type,
+            role.title,
+            role.description,
+            role.role_type,
+            role.role_status,
+            role.sort_order,
+            role.delete_flag,
+            role.tenant_id,
+            role.create_time,
+            role.create_user_id,
+            role.update_time,
+            role.update_user_id
+        FROM
+            ums_user_role ur
+            JOIN ums_role_info role ON ur.role_id = role.id
+        WHERE
+            ur.user_id = #{id}
+            AND ur.delete_flag = 0
+            AND role.org_id = #{orgId}
+            AND role.org_type = #{orgType}
+            -- AND role.role_status = 1
+            AND role.delete_flag = 0
+            AND role.role_type = 0
+        ORDER BY
+            role.sort_order,
+            role.create_time
+    </select>
+</mapper>

@@ -1,0 +1,10 @@
+server:
+  port: 9002
+
+logging:
+  level:
+    root: info
+    org.springframework.boot.autoconfigure: error
+#    path: logs/
+#    file:
+#      max-size: 1GB

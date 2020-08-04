@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.auth.mapper.CUmsUserRoleMapper">
+	<update id="deleteUmsUserRoleById" parameterType="java.lang.Long">
+        UPDATE ums_user_role SET delete_flag = NULL WHERE id = #{value}
+    </update>
+
+	<!--根据用户id获取其业务角色-->
+	<select id="getRoleInfoResListByUserId" parameterType="java.lang.Long"
+			resultType="com.example.auth.dto.res.RoleInfoRes">
+        SELECT
+            uur.role_id id,
+            uri.title,
+            uur.role_flag
+        FROM
+            ums_user_role uur
+            JOIN ums_role_info uri ON uri.id = uur.role_id
+            -- AND uri.role_status = 1
+            AND uri.delete_flag = 0
+            AND uri.role_type = 0
+        WHERE
+            uur.user_id = #{userId}
+            AND uur.delete_flag = 0
+            AND uur.role_flag = 1
+        ORDER BY
+            uri.sort_order
+    </select>
+</mapper>
